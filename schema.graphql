@@ -1,6 +1,37 @@
-type ExampleEntity @entity {
+type Token @entity {
   id: ID!
-  count: BigInt!
-  role: Bytes! # bytes32
-  previousAdminRole: Bytes! # bytes32
+  address: Bytes!
+  decimals: Int!
+  name: String!
+  symbol: String!
+  description: String
 }
+
+type Transaction @entity {
+  transactionHash: String!
+}
+ 
+type _Schema_
+  @fulltext(
+    name: "tokenSearch"
+    language: en
+    algorithm: rank
+    include: [
+      {
+        entity: "Token", 
+        fields: [
+          { 
+            name: "name"
+          }, 
+          { 
+            name: "symbol"
+          }, 
+          { 
+            name: "description"
+          },  
+        ]
+      }
+    ]
+  )
+
+  
