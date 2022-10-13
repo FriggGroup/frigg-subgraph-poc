@@ -1,37 +1,53 @@
+enum MarketType {
+  PRIMARY,
+  SECONDARY
+}
+
+enum TokenPhase {
+  BUY,
+  SWAP,
+  SELL
+}
+
 type Token @entity {
   id: ID!
   address: Bytes!
   decimals: Int!
   name: String!
   symbol: String!
-  description: String
 }
 
 type Transaction @entity {
-  transactionHash: String!
+  id: ID!
+  token: Token!
+  amount: BigInt!
+  from: Bytes!
+  to: Bytes!
+  transactionHash: Bytes!
+  timestamp: BigInt!
+  market: MarketType!
+  tokenPhase: TokenPhase!
 }
  
-type _Schema_
-  @fulltext(
-    name: "tokenSearch"
-    language: en
-    algorithm: rank
-    include: [
-      {
-        entity: "Token", 
-        fields: [
-          { 
-            name: "name"
-          }, 
-          { 
-            name: "symbol"
-          }, 
-          { 
-            name: "description"
-          },  
-        ]
-      }
-    ]
-  )
-
-  
+# type _Schema_
+#   @fulltext(
+#     name: "tokenSearch"
+#     language: en
+#     algorithm: rank
+#     include: [
+#       {
+#         entity: "Token", 
+#         fields: [
+#           { 
+#             name: "name"
+#           }, 
+#           { 
+#             name: "symbol"
+#           }, 
+#           { 
+#             name: "description"
+#           },  
+#         ]
+#       }
+#     ]
+#   )

@@ -1,0 +1,47 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+features:
+  - fullTextSearch
+dataSources:
+  - kind: ethereum
+    name: PrimaryRouter
+    network: mainnet
+    source:
+      address: "0x96418DF8B474e90E49183CC23fa41e4aD8B0ddbE"
+      abi: PrimaryRouter
+      startBlock: 15575809 # Block Number when contract got created: primaryRouter.sol
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - SuccessfulExpiration
+        - SuccessfulPurchase
+      abis:
+        - name: PrimaryRouter
+          file: ./abis/PrimaryRouter.json
+        - name: FriggToken
+          file: ./abis/FriggToken.json
+      eventHandlers:
+        - event: SuccessfulExpiration(indexed address,address,uint256)
+          handler: handleSuccessfulExpiration
+        - event: SuccessfulPurchase(indexed address,address,uint256)
+          handler: handleSuccessfulPurchase
+      file: ./src/primary-router.ts
+templates:
+  - kind: ethereum
+    name: FriggToken
+    network: mainnet
+    source:
+      abi: FriggToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - FriggToken
+      abis:
+        - name: FriggToken
+          file: ./abis/FriggToken.json
+      file: ./src/primary-router.ts # No additional Logic is needed
