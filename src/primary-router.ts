@@ -10,6 +10,7 @@ import { FriggToken } from '../generated/templates/FriggToken/FriggToken';
 
 export function handleSuccessfulPurchase(event: SuccessfulPurchase): void {
   let transaction = new Transaction(event.transaction.hash.toHexString())
+
   transaction.token = event.params._friggTokenAddress.toHexString();
   transaction.amount = event.params._amount;
   transaction.from = event.transaction.from;
@@ -46,12 +47,9 @@ export function handleSuccessfulExpiration(event: SuccessfulExpiration): void {
   let token = new Token(event.params._friggTokenAddress.toHexString())
   let tokenContract = FriggToken.bind(event.params._friggTokenAddress);
 
-  if (token) {
-    token.address = event.params._friggTokenAddress;
-    token.address = event.params._friggTokenAddress;
-    token.decimals = tokenContract.decimals();
-    token.name = tokenContract.name();
-    token.symbol = tokenContract.symbol();
-    token.save()
-  }
+  token.address = event.params._friggTokenAddress;
+  token.decimals = tokenContract.decimals();
+  token.name = tokenContract.name();
+  token.symbol = tokenContract.symbol();
+  token.save()
 }
