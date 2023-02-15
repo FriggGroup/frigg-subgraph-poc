@@ -28,26 +28,3 @@ type Transaction @entity {
   market: MarketType!
   tokenPhase: TokenPhase!
 }
- 
-# type _Schema_
-#   @fulltext(
-#     name: "tokenSearch"
-#     language: en
-#     algorithm: rank
-#     include: [
-#       {
-#         entity: "Token", 
-#         fields: [
-#           { 
-#             name: "name"
-#           }, 
-#           { 
-#             name: "symbol"
-#           }, 
-#           { 
-#             name: "description"
-#           },  
-#         ]
-#       }
-#     ]
-#   )
