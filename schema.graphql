@@ -19,7 +19,7 @@ type Token @entity {
 
 type Transaction @entity {
   id: ID!
-  token: Token!
+  token: Bytes!
   amount: BigInt!
   from: Bytes!
   to: Bytes!
